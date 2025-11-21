@@ -1,7 +1,22 @@
+import Image from "next/image"
+import Link from "next/link"
+import Navitems from "./Navitems"
+import UserDropdown from "./UserDropdown"
 
 const Header = () => {
   return (
-    <div>Header</div>
+   <header className="sticky top-0 header">
+      <div className="container header-wrapper">
+        <Link href="/">
+          <Image src="/assests/icons/logo.svg" alt="Signalist logo" width={140} height={32} className="h-8 w-auto cursor-pointer"/>
+        </Link>
+        <nav className="hidden sm:block">
+          <Navitems/>
+        </nav>
+        <UserDropdown/>
+
+      </div>
+   </header>
   )
 }
 
