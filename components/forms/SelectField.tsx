@@ -1,25 +1,41 @@
-import React from 'react'
 import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
-import {cn} from "@/lib/utils";
+import {Controller} from "react-hook-form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
-const InputField = ({ name, label, placeholder, type = "text", register, error, validation, disabled, value }: FormInputProps) => {
+const SelectField = ({ name, label, placeholder, options, control, error, required = false }: SelectFieldProps) => {
     return (
         <div className="space-y-2">
-            <Label htmlFor={name} className="form-label">
-                {label}
-            </Label>
-            <Input
-                type={type}
-                id={name}
-                placeholder={placeholder}
-                disabled={disabled}
-                value={value}
-                className={cn('form-input', { 'opacity-50 cursor-not-allowed': disabled })}
-                {...register(name, validation)}
+            <Label htmlFor={name} className="form-label">{label}</Label>
+
+            <Controller
+                name={name}
+                control={control}
+                rules={{
+                    required: required ? `Please select ${label.toLowerCase()}` : false,
+                }}
+                render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                        <SelectTrigger className="select-trigger">
+                            <SelectValue placeholder={placeholder} />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-800 border-gray-600 text-white">
+                            {options.map((option) => (
+                                <SelectItem value={option.value} key={option.value} className="focus:bg-gray-600 focus:text-white">
+                                    {option.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                        {error && <p className="text-sm text-red-500">{error.message}</p>}
+                    </Select>
+                )}
             />
-            {error && <p className="text-sm text-red-500">{error.message}</p>}
         </div>
     )
 }
-export default InputField
+export default SelectField

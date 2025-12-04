@@ -12,6 +12,7 @@ declare global {
         investmentGoals: string;
         riskTolerance: string;
         preferredIndustry: string;
+        
     };
 
     type CountrySelectProps = {
@@ -32,6 +33,7 @@ declare global {
         validation?: RegisterOptions;
         disabled?: boolean;
         value?: string;
+        options?: { label: string; value: string }[];
     };
 
     type Option = {
