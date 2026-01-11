@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, TrendingUp } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 // Inline styles for portability
 const styles = {
@@ -67,7 +68,7 @@ const Navbar = () => {
               boxShadow: styles.shadowGlow
             }}
           >
-            <TrendingUp className="w-5 h-5" style={{ color: "white" }} />
+            <Image src="/public/assets/icons/logo.svg" alt="Signalist logo" width={140} height={32} className='h-8 w-auto' />
           </div>
           <span 
             className="text-xl font-bold"
