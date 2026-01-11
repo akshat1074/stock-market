@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
@@ -11,7 +13,7 @@ import Footer from "@/components/landing/Footer";
 
 const Index = () => {
   useEffect(() => {
-    // Force dark mode for the landing page
+    
     document.documentElement.classList.add("dark");
     return () => {
       document.documentElement.classList.remove("dark");

@@ -1,5 +1,19 @@
 import { Star, Quote } from "lucide-react";
 
+// Inline styles for portability
+const styles = {
+  primaryGreen: "hsl(158, 64%, 42%)",
+  primaryGreenLight: "hsl(158, 64%, 51%)",
+  accentTeal: "hsl(172, 66%, 50%)",
+  gradientPrimary: "linear-gradient(135deg, hsl(158, 64%, 42%), hsl(172, 66%, 50%))",
+  shadowGlow: "0 0 40px hsla(158, 64%, 42%, 0.3)",
+  background: "hsl(220, 25%, 6%)",
+  foreground: "hsl(0, 0%, 98%)",
+  muted: "hsl(220, 10%, 60%)",
+  border: "hsl(220, 20%, 18%)",
+  cardBg: "hsl(220, 25%, 10%)",
+};
+
 const testimonials = [
   {
     name: "Michael Chen",
@@ -29,21 +43,46 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section id="testimonials" className="py-24 relative overflow-hidden">
+    <section 
+      id="testimonials" 
+      className="py-24 relative overflow-hidden"
+      style={{ backgroundColor: styles.background }}
+    >
       {/* Background */}
-      <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+      <div 
+        className="absolute bottom-0 left-1/2 w-96 h-96 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"
+        style={{ backgroundColor: `${styles.primaryGreen}0D` }}
+      />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-primary font-semibold text-sm uppercase tracking-wider mb-4">
+          <p 
+            className="font-semibold text-sm uppercase tracking-wider mb-4"
+            style={{ color: styles.primaryGreenLight }}
+          >
             Testimonials
           </p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 
+            className="text-3xl md:text-5xl font-bold mb-6"
+            style={{ 
+              fontFamily: "'Space Grotesk', ui-sans-serif, system-ui, sans-serif",
+              color: styles.foreground
+            }}
+          >
             Trusted by
-            <span className="text-gradient"> Top Traders</span>
+            <span 
+              style={{ 
+                background: styles.gradientPrimary,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text"
+              }}
+            >
+              {" "}Top Traders
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-lg" style={{ color: styles.muted }}>
             See what our community has to say about their experience with Signalist.
           </p>
         </div>
@@ -53,11 +92,17 @@ const TestimonialsSection = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="relative p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 group"
+              className="relative p-8 rounded-2xl transition-all duration-300 group"
+              style={{ 
+                backgroundColor: styles.cardBg,
+                border: `1px solid ${styles.border}`
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = `${styles.primaryGreen}4D`}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = styles.border}
             >
               {/* Quote Icon */}
               <div className="absolute top-8 right-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Quote className="w-12 h-12 text-primary" />
+                <Quote className="w-12 h-12" style={{ color: styles.primaryGreenLight }} />
               </div>
 
               {/* Rating */}
@@ -65,26 +110,33 @@ const TestimonialsSection = () => {
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star
                     key={i}
-                    className="w-5 h-5 fill-primary text-primary"
+                    className="w-5 h-5"
+                    style={{ fill: styles.primaryGreenLight, color: styles.primaryGreenLight }}
                   />
                 ))}
               </div>
 
               {/* Content */}
-              <p className="text-foreground leading-relaxed mb-8">
+              <p className="leading-relaxed mb-8" style={{ color: styles.foreground }}>
                 "{testimonial.content}"
               </p>
 
               {/* Author */}
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground font-semibold">
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center font-semibold"
+                  style={{ 
+                    background: styles.gradientPrimary,
+                    color: "white"
+                  }}
+                >
                   {testimonial.avatar}
                 </div>
                 <div>
-                  <div className="font-semibold text-foreground">
+                  <div className="font-semibold" style={{ color: styles.foreground }}>
                     {testimonial.name}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm" style={{ color: styles.muted }}>
                     {testimonial.role}
                   </div>
                 </div>

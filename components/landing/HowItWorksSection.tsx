@@ -1,5 +1,19 @@
 import { UserPlus, Settings, TrendingUp, Wallet } from "lucide-react";
 
+// Inline styles for portability
+const styles = {
+  primaryGreen: "hsl(158, 64%, 42%)",
+  primaryGreenLight: "hsl(158, 64%, 51%)",
+  accentTeal: "hsl(172, 66%, 50%)",
+  gradientPrimary: "linear-gradient(135deg, hsl(158, 64%, 42%), hsl(172, 66%, 50%))",
+  shadowGlow: "0 0 40px hsla(158, 64%, 42%, 0.3)",
+  background: "hsl(220, 25%, 6%)",
+  cardBg: "hsla(220, 25%, 10%, 0.3)",
+  foreground: "hsl(0, 0%, 98%)",
+  muted: "hsl(220, 10%, 60%)",
+  border: "hsl(220, 20%, 18%)",
+};
+
 const steps = [
   {
     icon: UserPlus,
@@ -29,21 +43,46 @@ const steps = [
 
 const HowItWorksSection = () => {
   return (
-    <section id="how-it-works" className="py-24 bg-card/30 relative overflow-hidden">
+    <section 
+      id="how-it-works" 
+      className="py-24 relative overflow-hidden"
+      style={{ backgroundColor: styles.cardBg }}
+    >
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+      <div 
+        className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"
+        style={{ backgroundColor: `${styles.primaryGreen}0D` }}
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-primary font-semibold text-sm uppercase tracking-wider mb-4">
+          <p 
+            className="font-semibold text-sm uppercase tracking-wider mb-4"
+            style={{ color: styles.primaryGreenLight }}
+          >
             How It Works
           </p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 
+            className="text-3xl md:text-5xl font-bold mb-6"
+            style={{ 
+              fontFamily: "'Space Grotesk', ui-sans-serif, system-ui, sans-serif",
+              color: styles.foreground
+            }}
+          >
             Start Trading in
-            <span className="text-gradient"> 4 Simple Steps</span>
+            <span 
+              style={{ 
+                background: styles.gradientPrimary,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text"
+              }}
+            >
+              {" "}4 Simple Steps
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-lg" style={{ color: styles.muted }}>
             From sign-up to your first profitable trade in under 5 minutes.
           </p>
         </div>
@@ -54,24 +93,51 @@ const HowItWorksSection = () => {
             <div key={index} className="relative">
               {/* Connector Line */}
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-14 left-1/2 w-full h-px bg-gradient-to-r from-primary/50 to-transparent z-0" />
+                <div 
+                  className="hidden lg:block absolute top-14 left-1/2 w-full h-px z-0"
+                  style={{ background: `linear-gradient(to right, ${styles.primaryGreen}80, transparent)` }}
+                />
               )}
 
               <div className="relative z-10 text-center">
                 {/* Step Number */}
-                <div className="inline-flex items-center justify-center w-28 h-28 rounded-full bg-card border-2 border-border hover:border-primary transition-colors mb-6 relative group">
-                  <div className="absolute inset-0 rounded-full bg-gradient-primary opacity-0 group-hover:opacity-10 transition-opacity" />
-                  <item.icon className="w-10 h-10 text-primary" />
-                  <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-xs font-bold text-primary-foreground shadow-glow">
+                <div 
+                  className="inline-flex items-center justify-center w-28 h-28 rounded-full mb-6 relative group transition-colors"
+                  style={{ 
+                    backgroundColor: styles.background,
+                    border: `2px solid ${styles.border}`
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.borderColor = styles.primaryGreen}
+                  onMouseLeave={(e) => e.currentTarget.style.borderColor = styles.border}
+                >
+                  <div 
+                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-10 transition-opacity"
+                    style={{ background: styles.gradientPrimary }}
+                  />
+                  <item.icon className="w-10 h-10" style={{ color: styles.primaryGreenLight }} />
+                  <span 
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                    style={{ 
+                      background: styles.gradientPrimary,
+                      color: "white",
+                      boxShadow: styles.shadowGlow
+                    }}
+                  >
                     {item.step}
                   </span>
                 </div>
 
                 {/* Content */}
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                <h3 
+                  className="text-xl font-semibold mb-3"
+                  style={{ 
+                    fontFamily: "'Space Grotesk', ui-sans-serif, system-ui, sans-serif",
+                    color: styles.foreground
+                  }}
+                >
                   {item.title}
                 </h3>
-                <p className="text-muted-foreground">
+                <p style={{ color: styles.muted }}>
                   {item.description}
                 </p>
               </div>
