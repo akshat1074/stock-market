@@ -102,7 +102,7 @@ const Navbar = () => {
           <Button 
             variant="ghost"
             style={{ color: styles.muted }}
-            onClick={() => router.push("/sign-up")}
+            onClick={() => router.push("/sign-in")}
           >
             Sign In
           </Button>
