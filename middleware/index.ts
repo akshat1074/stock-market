@@ -12,7 +12,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico|sign-in|sign-up|assets).*)',
-    ],
+    
+        matcher: ['/dashboard/:path*', '/watchlist/:path*', '/stocks/:path*'],
+        // explicitly list protected routes instead of excluding public ones
+
 };

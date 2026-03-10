@@ -1,36 +1,26 @@
-import {betterAuth} from "better-auth";
+// lib/auth.ts
+import "@/database/mongoose"; 
+import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { connectToDatabase } from "@/database/mongoose";
-import {nextCookies} from "better-auth/next-js";
+import { nextCookies } from "better-auth/next-js";
+import mongoose from "mongoose";
 
-let authInstance: ReturnType<typeof betterAuth> | null=null;
+// Connect synchronously at startup — not lazily
+const db = mongoose.connection.db;
 
-export const getAuth = async () =>{
-    if(authInstance) return authInstance;
+export const auth = betterAuth({
+  database: mongodbAdapter(db as any),
+  secret: process.env.BETTER_AUTH_SECRET,
+  baseURL: process.env.BETTER_AUTH_URL,
+  emailAndPassword: {
+    enabled: true,
+    disableSignUp: false,
+    requireEmailVerification: false,
+    minPasswordLength: 8,
+    maxPasswordLength: 128,
+    autoSignIn: true,
+  },
+  plugins: [nextCookies()],
+});
 
-    const mongoose = await connectToDatabase()
-    const db = mongoose.connection.db;
-
-    if(!db) throw new Error('MongoDB connection not found');
-
-    authInstance = betterAuth({
-        database:mongodbAdapter(db as any),
-        
-        secret: process.env.BETTER_AUTH_SECRET,
-        baseURL:process.env.BETTER_AUTH_URL,
-        emailAndPassword:{
-            enabled:true,
-            disableSignUp:false,
-            requireEmailVerification:false,
-            minPasswordLength:8,
-            maxPasswordLength:128,
-            autoSignIn:true,
-        },
-        plugins:[nextCookies()],
-
-    });
-
-    return authInstance;
-}
-
-export const auth = await getAuth()
+export type Session = typeof auth.$Infer.Session;

@@ -1,39 +1,24 @@
-import mongoose from "mongoose"
-import { cache } from "react";
+// database/mongoose.ts
+import mongoose from "mongoose";
 
-const MONGOB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
-declare global {
-    var mongooseCache:{
-        conn: typeof mongoose| null;
-        promise:Promise<typeof mongoose> | null;
+if (!MONGODB_URI) throw new Error("Missing MONGODB_URI");
 
-    }
+// Cache connection across hot reloads in dev
+const cached = global as typeof globalThis & {
+  mongoose?: { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null }
+};
+
+if (!cached.mongoose) {
+  cached.mongoose = { conn: null, promise: null };
 }
 
-let cached = global.mongooseCache;
-
-if(!cached){
-    cached = global.mongooseCache = {conn:null , promise:null};
+if (!cached.mongoose.promise) {
+  cached.mongoose.promise = mongoose.connect(MONGODB_URI).then((m) => m);
 }
 
-export const connectToDatabase = async() =>{
-    if(!MONGOB_URI) throw new Error ('MONGODB_URI must be set within .env');
+await cached.mongoose.promise;
+cached.mongoose.conn = mongoose;
 
-    if(cached.conn) return cached.conn;
-
-    if(!cached.promise){
-        cached.promise = mongoose.connect(MONGOB_URI,{bufferCommands:false})
-    }
-
-    try{
-        cached.conn = await cached.promise;
-    } catch(err){
-        cached.promise = null ;
-        throw err;
-    }
-
-   console.log(`Connected to databasem ${process.env.NODE_ENV} - ${MONGOB_URI}`) ;
-
-   return cached.conn
-}
+export default mongoose;

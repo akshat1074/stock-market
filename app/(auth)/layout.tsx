@@ -4,10 +4,17 @@ import {auth} from "@/lib/better-auth/auth";
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 
-const Layout = async ({ children }: { children : React.ReactNode }) => {
-    const session = await auth.api.getSession({ headers: await headers() })
 
-    if(session?.user) redirect('/')
+
+
+const Layout = async ({ children }: { children : React.ReactNode }) => {
+    if (!auth) {
+        throw new Error('Auth not initialized — check BETTER_AUTH_SECRET and BETTER_AUTH_URL in .env')
+      }
+
+    const session = await auth.api.getSession({ headers: await headers() })
+    console.log("seesion",session)
+    if(session?.user) redirect('/dashboard')
 
     return (
         <main className="auth-layout">
