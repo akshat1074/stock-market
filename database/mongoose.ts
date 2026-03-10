@@ -21,4 +21,11 @@ if (!cached.mongoose.promise) {
 await cached.mongoose.promise;
 cached.mongoose.conn = mongoose;
 
+export const connectToDatabase = async (): Promise<typeof mongoose> => {
+  if (mongoose.connection.readyState >= 1) return mongoose;
+  await mongoose.connect(MONGODB_URI);
+  return mongoose;
+};
+
+
 export default mongoose;
